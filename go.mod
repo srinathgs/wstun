@@ -7,6 +7,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/xtaci/smux v2.0.1+incompatible // indirect
 	github.com/xtaci/smux/v2 v2.1.0
 	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
