@@ -79,17 +79,16 @@ func wsHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 						return
 					}
 					var wg sync.WaitGroup
-					copyIO := func(dst, src net.Conn, wg sync.WaitGroup, grp string) {
+					copyIO := func(dst, src net.Conn, wgw *sync.WaitGroup, grp string) {
 						log.Infoln("Copying between", grp, dst, src)
 						n, err := io.Copy(dst, src)
 						log.Infoln("Copied", n)
 						log.Errorln("err in copy", grp, err)
-						wg.Done()
+						wgw.Done()
 					}
-					wg.Add(1)
-					go copyIO(pconn, tcon, wg, fmt.Sprintf("pc->tc %d", ct))
-					wg.Add(1)
-					go copyIO(tcon, pconn, wg, fmt.Sprintf("tc->pc %d", ct))
+					wg.Add(2)
+					go copyIO(pconn, tcon, &wg, fmt.Sprintf("pc->tc %d", ct))
+					go copyIO(tcon, pconn, &wg, fmt.Sprintf("tc->pc %d", ct))
 					wg.Wait()
 				}(conn, ctr)
 			}
