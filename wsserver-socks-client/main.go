@@ -84,6 +84,8 @@ func wsHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 						n, err := io.Copy(dst, src)
 						log.Infoln("Copied", n)
 						log.Errorln("err in copy", grp, err)
+						cerr := dst.Close()
+						log.Errorln("close cerr", cerr)
 						wgw.Done()
 					}
 					wg.Add(2)
